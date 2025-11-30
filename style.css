@@ -1106,7 +1106,7 @@ html {
 
 /* SPMB / PPDB New Styles */
 .spmb-header {
-    background: linear-gradient(180deg, #a08060 0%, #8a7050 100%);
+    background: linear-gradient(180deg, #1a6fc4 0%, #1558a0 100%);
 }
 
 .spmb-title {
@@ -1127,16 +1127,18 @@ html {
 }
 
 .spmb-info {
-    background: linear-gradient(180deg, #6a5a4a 0%, #5a4a3a 100%);
-    color: white;
+    background: linear-gradient(180deg, #f8f4f0 0%, #ebe3dc 100%);
+    color: #333;
 }
 
 .spmb-info-box {
     max-width: 800px;
     margin: 0 auto;
-    background: rgba(90, 75, 60, 0.6);
-    padding: 40px;
-    border-radius: 10px;
+    background: linear-gradient(145deg, #a08060 0%, #7a6248 50%, #5c4a38 100%);
+    padding: 50px 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    color: white;
 }
 
 .spmb-subtitle {

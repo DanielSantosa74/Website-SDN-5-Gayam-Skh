@@ -1,3 +1,138 @@
+// Biodata Tenaga Pendidik
+const biodataGuru = {
+    "Mila Kartika Sari": {
+        nama: "Mila Kartika Sari, S.Pd., M.Pd",
+        unit_kerja: "SD Negeri Gayam 05 Kec. Sukoharjo",
+        jabatan: "Kepala Sekolah",
+        alamat: "Jl. Serang RT 02/ RW 01 Jogobayan Gayam Sukoharjo",
+        no_hp: "087736402411",
+        email: "mitothela@gmail.com"
+    },
+    "Ratih Windi Tri": {
+        nama: "Ratih Windi Tri Hastutik, S.Pd",
+        tempat_tanggal_lahir: "Sukoharjo, 28 Oktober 1994",
+        alamat: "Jimbun RT.002 / Rw. 004 Pondok, Nguter",
+        unit_kerja: "SD Negeri Gayam 05",
+        jabatan: "Guru Kelas",
+        no_hp: "085642231390",
+        email: "ratihwindi28@gmail.com"
+    },
+    "Siti Chosyatun": {
+        nama: "Siti Chosyatun, S.Pd",
+        tempat_tanggal_lahir: "Sukoharjo, 14 Oktober 1985",
+        unit_kerja: "SD Negeri Gayam 05 Kec. Sukoharjo",
+        jabatan: "Guru",
+        alamat: "Sanggrahan RT 01 RW 05 Joho, Sukoharjo",
+        no_hp: "087712362785",
+        email: "sitichosyatun1985@gmail.com"
+    },
+    "Indah Ayu Marga": {
+        nama: "Indah Ayu Marga Utami, S.Pd",
+        tempat_tanggal_lahir: "Sukoharjo, 18 Maret 1995",
+        alamat: "Sugihan RT.01/RW.01, Sugihan, Kec. Bendosari, Kab. Sukoharjo",
+        no_hp: "085727749692",
+        email: "indahayumargautami@gmail.com",
+        unit_kerja: "SD Negeri Gayam 05 Kec. Sukoharjo"
+    },
+    "Yandra Dwi Yuliani": {
+        nama: "Yandra Dwi Yuliani, S.Pd",
+        tempat_lahir: "Sukoharjo, Jawa Tengah",
+        tanggal_lahir: "29 Juli 1994",
+        alamat: "Walang RT 002/ RW 002, Jombor, Bendosari, Sukoharjo",
+        no_hp: "085647538990",
+        instansi: "SD Negeri Gayam 05"
+    },
+    "Zuyyina Fadhila": {
+        nama: "Zuyyina Fadhila Muhtari",
+        unit_kerja: "SD Negeri Gayam 05",
+        jabatan: "Guru Kelas",
+        hobi: "Kulineran dan Jalan kaki",
+        band_fav: "Day6",
+        makanan_fav: "Bakso, buah, sup tahu telur (my comfort fewd), ramen, dll",
+        email: "zuyyinafmuhtari@gmail.com"
+    },
+    "Okfi Pusvitasari": {
+        nama: "OKFI PUSVITASARI, S.Pd",
+        unit_kerja: "SD NEGERI GAYAM 05",
+        jabatan: "GURU KELAS",
+        alamat: "DK. KENEP RT 02/ RW 05, KEL. KENEP KEC/KAB. SUKOHARJO",
+        no_hp: "087889323627",
+        email: "Okfigayam@gmail.com"
+    },
+    "Nurrohmah Widiyastuti": {
+        nama: "Nurrohmah Widiyastuti, S.Pd.I",
+        tempat_tanggal_lahir: "Sukoharjo, 22 November 1981",
+        alamat: "Bondalem, Rt.03/Rw.10, Gayam, Sukoharjo",
+        unit_kerja: "SD Negeri Gayam 05",
+        jabatan: "Guru Mapel PAI",
+        no_hp: "081228707098",
+        email: "nurwidiyas81@gmail.com"
+    },
+    "Nia Febrihastuti": {
+        nama: "Nia Febrihastuti, A.Md.Li",
+        unit_kerja: "SD Negeri Gayam 05"
+    }
+};
+
+function showBiodata(key) {
+    const data = biodataGuru[key];
+    if (!data) return;
+
+    let content = '<div class="text-start">';
+    for (const [label, value] of Object.entries(data)) {
+        const formattedLabel = label.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        content += `<p class="mb-2"><strong>${formattedLabel}:</strong> ${value}</p>`;
+    }
+    content += '</div>';
+
+    // Check if modal exists, if not create it
+    let modalElement = document.getElementById('biodataModal');
+    if (!modalElement) {
+        const modalHtml = `
+            <div class="modal fade" id="biodataModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title">Biodata Tenaga Pendidik</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="biodataModalBody">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        modalElement = document.getElementById('biodataModal');
+    }
+
+    document.getElementById('biodataModalBody').innerHTML = content;
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+}
+
+function initBiodataClicks() {
+    // Add click event listeners to teacher cards/items
+    const teacherItems = document.querySelectorAll('.org-card, .principal-photo');
+    teacherItems.forEach(item => {
+        item.style.cursor = 'pointer';
+        
+        item.addEventListener('click', () => {
+            const nameElement = item.querySelector('h5, h6');
+            if (nameElement) {
+                const fullName = nameElement.innerText;
+                // Try to find matching key
+                const key = Object.keys(biodataGuru).find(k => fullName.includes(k));
+                if (key) {
+                    showBiodata(key);
+                }
+            }
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Website SDN GAYAM 5 SUKOHARJO loaded successfully!');
     
@@ -8,6 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initForms();
     initScrollAnimations();
     initSmoothScroll();
+    initBiodataClicks();
 });
 
 // Navbar Active
